@@ -16,13 +16,15 @@ import { Input } from "@/components/ui/input"
 
 import * as z from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import Loader from "@/components/shared/Loader"
-import { createUserAccount } from "@/lib/appwrite/api"
 import { useCreateUserAccount, useSignInAccount } from "@/lib/react-query/queriesAndMutations"
+import { useUserContext } from "@/context/AuthContext"
 
 const SignupForm = () => {
   const { toast } = useToast()
+  const { checkAuthUser, isPending: isUserLoading } = useUserContext()
+  const navigate = useNavigate()
 
   // 1. Define your form.
   const form = useForm<z.infer<typeof signupValidation>>({
@@ -36,7 +38,7 @@ const SignupForm = () => {
   })
 
   // mutations here 
-  const { mutateAsync: createUserAccount, isPending: isCreatingUser } = useCreateUserAccount();
+  const { mutateAsync: createUserAccount, isPending: isCreatingAccount } = useCreateUserAccount();
 
   const { mutateAsync: signInAccount, isPending: isSigningIn } = useSignInAccount()
   
@@ -56,6 +58,15 @@ const SignupForm = () => {
     if(!session){
       return toast({ title: 'Signing in failed, Try again' })
     }
+
+    const isLoggedIn = await checkAuthUser()
+
+    if(isLoggedIn){
+      form.reset()
+      navigate("/")
+    } else {
+      return toast({ title: "Failed to Sign in. Please try again"})
+    }
   }
 
   return (
@@ -64,7 +75,7 @@ const SignupForm = () => {
         <img src="/assets/images/logo.svg" alt="logo" />
 
         <h2 className="h3-bold md:h2-bold pt-5 sm:pt-12">Create a new account</h2>
-
+        
         <p className="text-light-3 small-medium md:base-regular mt-2">To use Snapgram, please enter your details</p>
 
         <form onSubmit={form.handleSubmit(onSubmit)} className="flex-col gap-5 w-full mt-4">
@@ -118,7 +129,7 @@ const SignupForm = () => {
           />
           
           <Button type="submit" className="shad-button_primary mt-4 w-full">
-            { isCreatingUser ? (
+            { isCreatingAccount ? (
                 <div className="flex-center gap-2">
                   <Loader /> Loading...
                 </div>
