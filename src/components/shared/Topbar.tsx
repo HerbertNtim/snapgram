@@ -29,13 +29,11 @@ const Topbar = () => {
 
         <div className="flex gap-4">
           <Button variant='ghost' className="shad-button_ghost">
-            <img src="assets/icons/logout.svg" alt="logout" onClick={() => signOut()} />
-
-            <p className="small-medium">Logout</p>
+            <img src="/assets/icons/logout.svg" alt="logout" onClick={() => signOut()} />
           </Button>
 
           <Link to={`/profile/${user.id}`} className="flex-center gap-3">
-            <img src={ user.imageUrl || 'assets/images/profile.png'} alt=""  className="w-8 h-8 rounded-full"/>
+            <img src={ user.imageUrl || '/assets/images/profile.png'} alt=""  className="w-8 h-8 rounded-full"/>
           </Link>
         </div>
       </div>
