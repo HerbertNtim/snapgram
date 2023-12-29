@@ -391,3 +391,26 @@ export async function getInfinitePosts({ pageParam }: { pageParam: number }) {
     console.log(error);
   }
 }
+
+// =============== GET USERS
+export async function getUsers(limit?: number) {
+  const queries: any[] = [Query.orderDesc('$createdAt')]
+
+  if(limit) {
+    queries.push(Query.limit(limit))
+  }
+
+  try {
+    const users = await databases.listDocuments(
+      appwriteConfig.databaseId,
+      appwriteConfig.usersCollectionId,
+      [Query.orderDesc('$createdAt'), Query.limit(10)]
+    )
+
+    if(!users) throw Error
+
+    return users;
+  } catch (error) {
+    console.log(error)
+  }
+}
