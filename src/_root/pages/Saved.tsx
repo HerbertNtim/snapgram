@@ -1,17 +1,19 @@
 import GridPostList from "@/components/shared/GridPostList";
 import Loader from "@/components/shared/Loader";
-import { useGetCurrentUser } from "@/lib/react-query/queriesAndMutations"
-import { Models } from "appwrite"
+import { useGetCurrentUser } from "@/lib/react-query/queriesAndMutations";
+import { Models } from "appwrite";
 
 const Saved = () => {
-  const { data: currentUser } = useGetCurrentUser()
+  const { data: currentUser } = useGetCurrentUser();
 
-  const savedPosts = currentUser?.save.map((savePost: Models.Document) => ({
-    ...savePost.post,
-    creator: {
-      imageUrl: currentUser.imageUrl
-    }
-  })).reverse()
+  const savePosts = currentUser?.save
+    .map((savePost: Models.Document) => ({
+      ...savePost.post,
+      creator: {
+        imageUrl: currentUser.imageUrl,
+      },
+    }))
+    .reverse();
 
   return (
     <section className="saved-container">
@@ -22,28 +24,27 @@ const Saved = () => {
       </div>
 
       <div className="flex-between w-full max-w-5xl mt-4 mb-7">
-          <div className="w-[561px] h-[46px] flex justify-between items-center">
-            <div className="flex gap-2">
-              <img src="/assets/icons/posts.svg" alt="posts" width={20} height={20}  />
+        <div className="w-[561px] h-[46px] flex justify-between items-center">
+          <div className="flex gap-2">
+            <img src="/assets/icons/posts.svg" alt="posts" width={20} height={20}  />
 
-              <h2 className="font-medium">Posts</h2>
-            </div>
-
-            <div className="flex gap-2">
-              <img src="/assets/icons/wallpaper.svg" alt="posts" width={20} height={20} />
-
-              <h2 className="font-medium">Reels</h2>
-            </div>
-
-            <div className="flex gap-2">
-              <img src="/assets/icons/gallery-add.svg" alt="posts" width={20} height={20} />
-
-              <h2 className="font-medium">Collections</h2>
-            </div>
+            <h2 className="font-medium">Posts</h2>
           </div>
 
-          <div className="flex-center gap-3 bg-dark-3 rounded-xl px-4 py-2 cursor-pointer
-        "> 
+          <div className="flex gap-2">
+            <img src="/assets/icons/wallpaper.svg" alt="posts" width={20} height={20} />
+
+            <h2 className="font-medium">Reels</h2>
+          </div>
+
+          <div className="flex gap-2">
+            <img src="/assets/icons/gallery-add.svg" alt="posts" width={20} height={20} />
+
+            <h2 className="font-medium">Collections</h2>
+          </div>
+        </div>
+
+        <div className="flex-center gap-3 bg-dark-3 rounded-xl px-4 py-2 cursor-pointer"> 
           <p className="small-medium md:base-medium text-light-2">All</p>
 
           <img 
@@ -66,8 +67,6 @@ const Saved = () => {
           )}
         </ul>
       )}
-    </div>
-  );
     </section>
   )
 }
