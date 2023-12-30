@@ -1,8 +1,9 @@
 import Loader from "@/components/shared/Loader";
 import StatBlock from "@/components/shared/StatBlock";
+import { Button } from "@/components/ui/button";
 import { useUserContext } from "@/context/AuthContext";
 import { useGetUserById } from "@/lib/react-query/queriesAndMutations";
-import { useLocation, useParams } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 
 const Profile = () => {
   const { id } = useParams()
@@ -39,11 +40,55 @@ const Profile = () => {
 
             <div>
               <StatBlock value={currentUser.posts.length} label="Posts" />
+              <StatBlock value={20} label="Followers" />
+              <StatBlock value={20} label="Following" />
+            </div>
+
+            <p className="small-medium md:base-medium text-center xl:text-left mt-7 max-w-screen-sm">
+              {currentUser.bio}
+            </p>
+          </div>
+
+          <div className="flex justify-center gap-4">
+            <div className={`${user.id !== currentUser.$id && 'hidden'}`}>
+              <Link 
+                to={`/update-profile/${currentUser.$id}`}
+                className={`h-12 bg-dark-4 px-5 text-light-1 flex-center gap-2 rounded-lg ${user.id !== currentUser.$id && 'hidden'}`}
+              >
+                <img src="/assets/icons/edit.svg" alt="edit" width={20} height={20} />
+                <p className="flex whitespace-nowrap small-medium">
+                  Edit Profile
+                </p>
+              </Link>
+            </div>
+            <div className={`${user.id === id && "hidden"}`}>
+              <Button type='button' className="shad-button_primary px-8">
+                Follow
+              </Button>
             </div>
           </div>
         </div>
       </div>
     </section>
+
+    {currentUser?.$id === user.id && (
+      <div>
+        Link
+          to={`/profile/${id}`}
+          className={`profile-tab rounded-l-lg ${
+            pathname === `/profile/${id}` && "!bg-dark-3"
+          }`}>
+          <img
+            src={"/assets/icons/posts.svg"}
+            alt="posts"
+            width={20}
+            height={20}
+          />
+          Posts
+        </Link>
+      </div>
+    )}    
+
   )
 }
 

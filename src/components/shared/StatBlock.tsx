@@ -1,4 +1,4 @@
-interface StatBlockProps {
+type StatBlockProps = {
   value: string | number;
   label: string;
 }
