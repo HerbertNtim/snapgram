@@ -46,7 +46,7 @@ const SigninForm = () => {
 
       navigate("/");
     } else {
-      toast({ title: "Login failed. Please try again.", });
+      toast({ title: "Login failed. Please try again." });
       
       return;
     }
@@ -54,7 +54,7 @@ const SigninForm = () => {
 
   return (
     <Form {...form}>
-      <div className="sm:w-420 flex-center flex-col">
+      <div className="sm:w-420 flex-center flex-col relative">
         <img src="/assets/images/logo.svg" alt="logo" />
 
         <h2 className="h3-bold md:h2-bold pt-5 sm:pt-12">
@@ -87,7 +87,7 @@ const SigninForm = () => {
               <FormItem>
                 <FormLabel className="shad-form_label">Password</FormLabel>
                 <FormControl>
-                  <Input type="password" className="shad-input" {...field} />
+                  <Input type= 'password' className="shad-input" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
