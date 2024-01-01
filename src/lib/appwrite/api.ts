@@ -371,7 +371,7 @@ export async function searchPosts(searchTerm: string) {
 }
 
 export async function getInfinitePosts({ pageParam }: { pageParam: number }) {
-  const queries: any[] = [Query.orderDesc("$updatedAt"), Query.limit(9)];
+  const queries: string[] = [Query.orderDesc("$updatedAt"), Query.limit(9)];
 
   if (pageParam) {
     queries.push(Query.cursorAfter(pageParam.toString()));
@@ -394,7 +394,7 @@ export async function getInfinitePosts({ pageParam }: { pageParam: number }) {
 
 // =============== GET USERS
 export async function getUsers(limit?: number) {
-  const queries: any[] = [Query.orderDesc('$createdAt')]
+  const queries: string[] = [Query.orderDesc('$createdAt')]
 
   if(limit) {
     queries.push(Query.limit(limit))
@@ -459,7 +459,7 @@ export async function updateUser(user: IUpdateUser) {
     //  Update user
     const updatedUser = await databases.updateDocument(
       appwriteConfig.databaseId,
-      appwriteConfig.userCollectionId,
+      appwriteConfig.usersCollectionId,
       user.userId,
       {
         name: user.name,
