@@ -32,6 +32,8 @@ const Explore = () => {
   const debouncedValue = useDebounce(searchValue, 500)
   const { data: searchedPosts, isFetching: isSearchFetching } = useSearchPost(debouncedValue)
 
+  
+
   useEffect(() => {
     if(inView && !searchValue) fetchNextPage()
   }, [fetchNextPage, inView, searchValue])
@@ -45,7 +47,7 @@ const Explore = () => {
   }
 
   const shouldShowSearchResults = searchValue !== ''
-  const shouldShowPosts = !shouldShowSearchResults && posts.pages.every((page) => page.documents.length === 0)
+  const shouldShowPosts = !shouldShowSearchResults && posts.pages.every((item) => item?.documents.length === 0)
 
   return (
     <section className="explore-container">
@@ -93,8 +95,8 @@ const Explore = () => {
           />
         ) : shouldShowPosts ? (
           <p className="text-light-4 mt-10 text-center w-full">End of Posts</p>
-        ) : ( posts.pages.map((page, index) => (
-          <GridPostList key={`page-${index}`} posts={page.documents}/>
+        ) : ( posts.pages.map((item, index) => (
+          <GridPostList key={`page-${index}`} posts={item?.documents}/>
           ))
         )}
       </div>
