@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import GridPostList from "@/components/shared/GridPostList"
 import Loader from "@/components/shared/Loader"
 import { Input } from "@/components/ui/input"
@@ -47,8 +48,7 @@ const Explore = () => {
   }
 
   const shouldShowSearchResults = searchValue !== ''
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const shouldShowPosts = !shouldShowSearchResults && posts.pages.every((item: { documents: string | any[] }) => item.documents.length === 0)
+  const shouldShowPosts = !shouldShowSearchResults && posts.pages.every((item: { documents: string | any[] }) => item?.documents.length === 0)
 
   return (
     <section className="explore-container">
@@ -96,7 +96,6 @@ const Explore = () => {
           />
         ) : shouldShowPosts ? (
           <p className="text-light-4 mt-10 text-center w-full">End of Posts</p>
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         ) : ( posts.pages.map((item: { documents: Models.Document[] | undefined }, index: any) => (
           <GridPostList key={`page-${index}`} posts={item?.documents}/>
           ))
